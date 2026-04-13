@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Electoral Delimitation</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="ux-bg-light">
+    <div class="sidebar ux-bg-primary ux-text-white">
+        <h2 class="ux-p-3">SmartDelimit</h2>
+        <nav class="ux-list-group">
+            <a href="#home" class="ux-list-item ux-text-white">Dashboard</a>
+            <a href="#upload" class="ux-list-item ux-text-white">Upload Data</a>
+            <a href="#results" class="ux-list-item ux-text-white">Analysis</a>
+            <a href="#docs" class="ux-list-item ux-text-white">Documentation</a>
+            <a href="{{ url_for('logout') }}" class="ux-list-item ux-text-white ux-mt-3">Logout</a>
+        </nav>
+    </div>
+
+    <main class="content">
+        <section id="home">
+            <h1 class="ux-h2">Electoral Delimitation System</h1>
+            <p class="ux-text-muted">Automated, ML-driven constituency boundary optimization.</p>
+            <div class="ux-grid ux-mt-4" id="metrics-view">
+                </div>
+        </section>
+
+        <section id="upload" class="ux-card ux-p-4 ux-mt-4">
+            <h3 class="ux-h4">1. Data Ingestion</h3>
+            <input type="file" id="csvFile" class="ux-form-control ux-mb-3" accept=".csv">
+            <button class="ux-btn ux-btn-primary" onclick="uploadData()">Upload & Preprocess</button>
+            <div id="uploadStatus" class="ux-mt-2"></div>
+        </section>
+
+        <section id="process" class="ux-card ux-p-4 ux-mt-4">
+            <h3 class="ux-h4">2. Quadtree Partitioning</h3>
+            <label class="ux-label">Population Threshold per Cell:</label>
+            <input type="number" id="popThreshold" class="ux-form-control ux-mb-3" value="500">
+            <button class="ux-btn ux-btn-secondary" onclick="runPartition()">Generate Cells</button>
+            <div id="partitionResults" class="ux-mt-2"></div>
+        </section>
+
+        <section id="results" class="ux-card ux-p-4 ux-mt-4">
+            <h3 class="ux-h4">3. ML Boundary Generation</h3>
+            <label class="ux-label">Target Constituencies:</label>
+            <input type="number" id="constCount" class="ux-form-control ux-mb-3" value="5">
+            <button class="ux-btn ux-btn-success" onclick="generateBoundaries()">Run ML Clustering</button>
+            <div class="ux-mt-4">
+                <canvas id="resultsChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://ux4g.gov.in/release/2.0.8/js/ux4g.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
