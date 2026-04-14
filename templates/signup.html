@@ -1,124 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Smart Electoral Delimitation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .auth-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .auth-card h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-            font-weight: 600;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
-        }
-        .create-btn {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
-            border: none;
-            border-radius: 50px;
-            padding: 15px 30px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-        .create-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-        }
-        .create-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        .create-btn:hover::before {
-            left: 100%;
-        }
-        .signin-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
-        .signin-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .signin-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up • SmartDelimit</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <div class="auth-card">
-        <h2>Sign Up / Create Account</h2>
-        {% if error %}
-            <div class="ux-alert ux-alert-danger ux-mb-3">{{ error }}</div>
-        {% endif %}
-        <form method="POST">
-            <div class="form-group">
-                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Full Name" required>
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
-            </div>
-            <button type="submit" class="create-btn">Create Account</button>
-        </form>
-        <div class="signin-link">
-            <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
-        </div>
-    </div>
+<body class="auth-layout">
+  <div class="auth-card">
+    <h2>Create your SmartDelimit account</h2>
+    {% if error %}
+      <div class="alert"><strong>Sign up failed</strong>{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+      <div class="form-group">
+        <input type="text" class="form-input" id="full_name" name="full_name" placeholder="Full Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-input" id="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-input" id="password" name="password" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-input" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+      </div>
+      <div class="actions">
+        <button type="submit" class="auth-button">Create account</button>
+      </div>
+    </form>
+    <p class="auth-footnote">Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
 </body>
 </html>

@@ -1,93 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Smart Electoral Delimitation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .login-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50px;
-            padding: 15px 40px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            display: block;
-            margin: 20px auto 0;
-            text-align: center;
-        }
-        .login-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 0 20px rgba(102, 126, 234, 0.4);
-        }
-        .login-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        .login-btn:hover::before {
-            left: 100%;
-        }
-        .signin-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
-        .signin-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .signin-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login • SmartDelimit</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="ux-bg-light">
-    <div class="ux-container">
-        <div class="ux-row ux-justify-content-center">
-            <div class="ux-col-md-6">
-                <div class="ux-card ux-p-4">
-                    <h2 class="ux-h3 ux-text-center ux-mb-4">Login</h2>
-                    {% if error %}
-                        <div class="ux-alert ux-alert-danger">{{ error }}</div>
-                    {% endif %}
-                    <form method="POST">
-                        <div class="ux-mb-3">
-                            <label for="email" class="ux-form-label">Email</label>
-                            <input type="email" class="ux-form-control" id="email" name="email" required>
-                        </div>
-                        <div class="ux-mb-3">
-                            <label for="password" class="ux-form-label">Password</label>
-                            <input type="password" class="ux-form-control" id="password" name="password" required>
-                        </div>
-                        <button type="submit" class="login-btn">Login</button>
-                    </form>
-                    <div class="signin-link">
-                        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="auth-layout">
+  <div class="auth-card">
+    <h2>Welcome back</h2>
+    {% if error %}
+      <div class="alert"><strong>Login failed</strong>{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+      <div class="form-group">
+        <input type="email" class="form-input" id="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-input" id="password" name="password" placeholder="Password" required>
+      </div>
+      <div class="actions">
+        <button type="submit" class="auth-button">Login</button>
+      </div>
+    </form>
+    <p class="auth-footnote">Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+  </div>
 </body>
 </html>

@@ -1,61 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Electoral Delimitation</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Electoral Delimitation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="ux-bg-light">
-    <div class="sidebar ux-bg-primary ux-text-white">
-        <h2 class="ux-p-3">SmartDelimit</h2>
-        <nav class="ux-list-group">
-            <a href="#home" class="ux-list-item ux-text-white">Dashboard</a>
-            <a href="#upload" class="ux-list-item ux-text-white">Upload Data</a>
-            <a href="#results" class="ux-list-item ux-text-white">Analysis</a>
-            <a href="#docs" class="ux-list-item ux-text-white">Documentation</a>
-            <a href="{{ url_for('logout') }}" class="ux-list-item ux-text-white ux-mt-3">Logout</a>
-        </nav>
-    </div>
+<body class="app-shell">
+  <div class="page-layout">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">SD</div>
+        <div class="brand-copy">
+          <p>SmartDelimitation</p>
+          <span>Electoral delimitation workspace</span>
+        </div>
+      </div>
 
-    <main class="content">
-        <section id="home">
-            <h1 class="ux-h2">Electoral Delimitation System</h1>
-            <p class="ux-text-muted">Automated, ML-driven constituency boundary optimization.</p>
-            <div class="ux-grid ux-mt-4" id="metrics-view">
-                </div>
-        </section>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a href="#home" class="topnav-link active">Dashboard</a>
+        <a href="#upload" class="topnav-link">Upload</a>
+        <a href="#process" class="topnav-link">Partition</a>
+        <a href="#results" class="topnav-link">Analysis</a>
+      </nav>
 
-        <section id="upload" class="ux-card ux-p-4 ux-mt-4">
-            <h3 class="ux-h4">1. Data Ingestion</h3>
-            <input type="file" id="csvFile" class="ux-form-control ux-mb-3" accept=".csv">
-            <button class="ux-btn ux-btn-primary" onclick="uploadData()">Upload & Preprocess</button>
-            <div id="uploadStatus" class="ux-mt-2"></div>
-        </section>
+      <a href="{{ url_for('logout') }}" class="button button-secondary">Logout</a>
+    </header>
 
-        <section id="process" class="ux-card ux-p-4 ux-mt-4">
-            <h3 class="ux-h4">2. Quadtree Partitioning</h3>
-            <label class="ux-label">Population Threshold per Cell:</label>
-            <input type="number" id="popThreshold" class="ux-form-control ux-mb-3" value="500">
-            <button class="ux-btn ux-btn-secondary" onclick="runPartition()">Generate Cells</button>
-            <div id="partitionResults" class="ux-mt-2"></div>
-        </section>
+    <main>
+      <section id="home" class="hero-card">
+        <div>
+          <p class="hero-eyebrow">Delimitation intelligence</p>
+          <h1 class="hero-title">Build fair, efficient electoral boundaries with clarity.</h1>
+          <p class="hero-description">Streamline constituency design using powerful quadtree partitioning, machine learning cluster insights, and fairness metrics — all in a premium, modern dashboard flow.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#upload">Upload data</a>
+            <a class="button button-secondary" href="#results">Review analysis</a>
+          </div>
+        </div>
 
-        <section id="results" class="ux-card ux-p-4 ux-mt-4">
-            <h3 class="ux-h4">3. ML Boundary Generation</h3>
-            <label class="ux-label">Target Constituencies:</label>
-            <input type="number" id="constCount" class="ux-form-control ux-mb-3" value="5">
-            <button class="ux-btn ux-btn-success" onclick="generateBoundaries()">Run ML Clustering</button>
-            <div class="ux-mt-4">
-                <canvas id="resultsChart"></canvas>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <small>Fairness score</small>
+            <strong>92%</strong>
+          </div>
+          <div class="metric-card">
+            <small>Partition quality</small>
+            <strong>4.6 / 5</strong>
+          </div>
+          <div class="metric-card">
+            <small>Estimated runtime</small>
+            <strong>3.2s</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-section" aria-label="Workflow steps">
+        <div id="upload" class="card">
+          <h3>1. Data ingestion</h3>
+          <div class="field-group">
+            <label class="label" for="csvFile">Upload a constituency dataset</label>
+            <input type="file" id="csvFile" class="input" accept=".csv">
+            <p class="section-note">CSV should include latitude, longitude, population, and socio-economic score fields.</p>
+          </div>
+          <div class="button-row">
+            <button class="button button-primary" onclick="uploadData()">Upload & preprocess</button>
+          </div>
+          <div id="uploadStatus" class="section-note"></div>
+        </div>
+
+        <div id="process" class="card">
+          <h3>2. Quadtree partitioning</h3>
+          <div class="field-group">
+            <label class="label" for="popThreshold">Population threshold per cell</label>
+            <input type="number" id="popThreshold" class="input" value="500">
+          </div>
+          <p class="section-note">Fine-tune the balance between regional size and voter density.</p>
+          <div class="button-row">
+            <button class="button button-secondary" onclick="runPartition()">Generate cells</button>
+          </div>
+          <div id="partitionResults" class="section-note"></div>
+        </div>
+
+        <div id="results" class="card">
+          <h3>3. Boundary generation</h3>
+          <div class="field-group">
+            <label class="label" for="constCount">Target number of constituencies</label>
+            <input type="number" id="constCount" class="input" value="5">
+          </div>
+          <p class="section-note">Use ML clustering to group partitions into cohesive constituencies.</p>
+          <div class="button-row">
+            <button class="button button-primary" onclick="generateBoundaries()">Run ML clustering</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="analytics-grid">
+        <div class="panel chart-card">
+          <div class="panel-heading">
+            <h4>Boundary analytics</h4>
+            <p>Visualize constituency score and distribution after generation.</p>
+          </div>
+          <canvas id="resultsChart"></canvas>
+        </div>
+
+        <div class="panel">
+          <h4>Current insights</h4>
+          <p>Track the active workflow and review critical fairness outputs to ensure balanced district design.</p>
+          <div class="panel-list">
+            <div class="panel-item">
+              <span>Data uploaded</span>
+              <strong>Ready</strong>
             </div>
-        </section>
+            <div class="panel-item">
+              <span>Partitioning status</span>
+              <strong>Awaiting input</strong>
+            </div>
+            <div class="panel-item">
+              <span>Latest analysis</span>
+              <strong>Pending</strong>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+  </div>
 
-    <script src="https://ux4g.gov.in/release/2.0.8/js/ux4g.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
